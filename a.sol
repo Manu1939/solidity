@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
 
-// My contract address:  0xE6A1c507402352c39254a46085ea7EFe71FDaAdc
+// My contract address:  0xdf1eACAaB9B9DbBB8D146DB6Aff83331C30493Df
 
 contract PiggyBank {
 
@@ -32,9 +32,11 @@ contract PiggyBank {
     // Function to receive ETH, called depositToTheBank
     // -- Function should log who sent the ETH 
     event Log(address indexed sender, string message);
-    function depositToTheBank() public payable {
-        deposits[msg.sender] += msg.value;
-         totalAmount +=msg.value;
+    function depositToTheBank(uint amount) public payable {
+         require(msg.value == amount, "Amount must be equal to the sent ether.");
+        deposits[msg.sender] += amount;
+        totalAmount += amount;
+        
          emit Log(msg.sender,"has sent ETH");
 
        if (totalAmount >= savingGoal) {
